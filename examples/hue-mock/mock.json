@@ -1,0 +1,13 @@
+{
+  "groups": {
+    "1": {
+      "label": "living room"
+    },
+    "2": {
+      "label": "office"
+    },
+    "3": {
+      "label": "kitchen"
+    }
+  }
+}
