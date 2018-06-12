@@ -14,7 +14,7 @@ const bridge = new Bridge({
   host: process.env.HUE_HOST,
   user: process.env.HUE_USER,
   devicetype: 'darkhorse#test',
-  baseUrl: 'http://192.168.1.64:3000/'
+  baseUrl: process.env.BASE_URL
 })
 
 bridge.connect().then(() => {
