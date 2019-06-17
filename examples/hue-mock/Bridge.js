@@ -1,6 +1,7 @@
 const apiDocumentation = require('hydra-base/documentation')
 const Group = require('./Group')
 const Groups = require('./Groups')
+const Root = require('../../lib/Root')
 const Status = require('../../lib/Status')
 
 class Bridge {
@@ -21,6 +22,10 @@ class Bridge {
   }
 
   object (path) {
+    if (path === '/') {
+      return Promise.resolve(new Root(this))
+    }
+
     const group = path.match(new RegExp('/group/(.*)'))
 
     if (group) {
