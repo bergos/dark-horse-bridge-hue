@@ -1,39 +1,17 @@
-const api = require('hydra-middleware/api')
-const context = require('./lib/context')
 const express = require('express')
-const hydraFactory = require('hydra-middleware').factory
 const morgan = require('morgan')
 const url = require('url')
-const Bridge = require('./lib/Bridge')
+const middleware = require('./middleware')
 
 const app = express()
 
 app.use(morgan('combined'))
 
-const bridge = new Bridge({
-  host: process.env.HUE_HOST,
-  user: process.env.HUE_USER,
-  devicetype: 'darkhorse#test',
-  baseUrl: process.env.BASE_URL
-})
-
-bridge.connect().then(() => {
-  // add api Link header and serve the documentation
-  app.use(api(bridge.apiDocumentation()))
-
-  // use Hydra factory to dynamically load the requested object
-  app.use(hydraFactory((iri) => {
-    return new Promise(resolve => {
-      bridge.object(url.parse(iri).pathname).then(object => {
-        resolve(object)
-      }).catch(() => {
-        resolve(null)
-      })
-    })
-  }, context))
+Promise.resolve().then(() => {
+  app.use(middleware(process.env.HUE_HOST, process.env.HUE_USER, process.env.BASE_URL))
 
   return new Promise((resolve, reject) => {
-    const server = app.listen(url.parse(bridge.baseUrl).port, (err) => {
+    const server = app.listen(url.parse(process.env.BASE_URL).port, (err) => {
       if (err) {
         return reject(err)
       }
@@ -47,5 +25,5 @@ bridge.connect().then(() => {
     })
   })
 }).catch((err) => {
-  console.error(err.stack || err.message)
+  console.error(err)
 })
