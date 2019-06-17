@@ -3,9 +3,7 @@
   "version": "0.0.0",
   "description": "Dark Horse bridge for Philips Hue Bridge",
   "main": "index.js",
-  "scripts": {
-    "build": "browserify lib/app/index.js -d -o public/app.js"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git://github.com/bergos/dark-horse-bridge-hue.git"
@@ -21,6 +19,7 @@
     "express": "^4.15.4",
     "hydra-base": "git://github.com/bergos/hydra-base.git#master",
     "hydra-middleware": "git://github.com/bergos/hydra-middleware.git#develop",
+    "lodash": "^4.17.11",
     "morgan": "^1.9.0",
     "node-hue-api": "^2.4.2",
     "rawdevjs-math-color": "^1.0.0"
